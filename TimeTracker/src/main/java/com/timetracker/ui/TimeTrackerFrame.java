@@ -322,7 +322,7 @@ public class TimeTrackerFrame extends JFrame implements PropertyChangeListener {
                 break;
             case "logout":
                 SwingUtilities.invokeLater(() -> {
-                    new LoginFrame(new LoginViewModel()).setVisible(true);
+                    //new LoginFrame(new LoginViewModel()).setVisible(true);
                     dispose();
                 });
                 break;

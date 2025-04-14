@@ -19,8 +19,9 @@ public class LoginFrame extends JFrame implements PropertyChangeListener {
     private JLabel errorLabel;
     private JProgressBar progressBar;
 
-    public LoginFrame(LoginViewModel viewModel) {
-        this.viewModel = viewModel;
+    public LoginFrame() {
+         this.viewModel = new LoginViewModel();
+        //this.viewModel = viewModel;
         viewModel.addPropertyChangeListener(this);
         initializeUI();
     }
@@ -44,20 +45,20 @@ public class LoginFrame extends JFrame implements PropertyChangeListener {
         gbc.gridy = 0;
         mainPanel.add(new JLabel("Username:"), gbc);
         gbc.gridx = 1;
-        usernameField = new JTextField(20);
-        usernameField.setText(viewModel.getUsername());
-        usernameField.getDocument().addDocumentListener(new SimpleDocumentListener(e -> viewModel.setUsername(usernameField.getText())));
-        mainPanel.add(usernameField, gbc);
+//        usernameField = new JTextField(20);
+//        usernameField.setText(viewModel.getUsername());
+//        usernameField.getDocument().addDocumentListener(new SimpleDocumentListener(e -> viewModel.setUsername(usernameField.getText())));
+//        mainPanel.add(usernameField, gbc);
 
         // Password
         gbc.gridx = 0;
         gbc.gridy = 1;
         mainPanel.add(new JLabel("Password:"), gbc);
         gbc.gridx = 1;
-        passwordField = new JPasswordField(20);
-        passwordField.setText(viewModel.getPassword());
-        passwordField.getDocument().addDocumentListener(new SimpleDocumentListener(e -> viewModel.setPassword(new String(passwordField.getPassword()))));
-        mainPanel.add(passwordField, gbc);
+//        passwordField = new JPasswordField(20);
+//        passwordField.setText(viewModel.getPassword());
+//        passwordField.getDocument().addDocumentListener(new SimpleDocumentListener(e -> viewModel.setPassword(new String(passwordField.getPassword()))));
+//        mainPanel.add(passwordField, gbc);
 
         // Remember Me
         gbc.gridx = 0;

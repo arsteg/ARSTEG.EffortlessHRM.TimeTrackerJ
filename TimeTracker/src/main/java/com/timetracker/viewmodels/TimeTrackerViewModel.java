@@ -1,11 +1,10 @@
 package com.timetracker.viewmodels;
 
-import com.timetracker.models.Project;
-import com.timetracker.models.ProjectTask;
 import com.timetracker.services.RESTService;
 import com.timetracker.utilities.IdleTimeDetector;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
@@ -251,9 +250,9 @@ public class TimeTrackerViewModel {
         support.firePropertyChange("currentMonthTimeTracked", null, currentMonthTimeTracked);
     }
 
-    private String formatTime(double minutes  {
+    private String formatTime(double minutes)  {
         int hours = (int) (minutes / 60);
-        int minutes = (int) (minutes % 60);
+        minutes = (int) (minutes % 60);
         return String.format("%d hrs %02d m", hours, minutes);
     }
 
