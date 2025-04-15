@@ -145,6 +145,7 @@ public class LoginFrame extends JFrame {
 
         // Version info
         JPanel versionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        versionPanel.setBorder(BorderFactory.createEmptyBorder(200, 0, 0, 0));
         versionPanel.setOpaque(false);
         JLabel versionLabel = new JLabel("Version");
         versionLabel.setFont(new Font("Arial", Font.PLAIN, 16));
