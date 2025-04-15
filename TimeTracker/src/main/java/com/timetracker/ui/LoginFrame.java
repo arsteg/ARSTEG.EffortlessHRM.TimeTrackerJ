@@ -95,10 +95,27 @@ public class LoginFrame extends JFrame {
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
 
         // Logo
-        JLabel logoLabel = new JLabel(new ImageIcon("logo.png")); // Replace with actual logo
-        logoLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        logoLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
-        leftPanel.add(logoLabel);
+//        ImageIcon logoIcon = new ImageIcon(getClass().getResource("/images/logo.png"));
+//        Image scaledImage = logoIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+//        JLabel logoLabel = new JLabel(new ImageIcon(scaledImage));
+//        logoLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+//        logoLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
+//        logoLabel.setPreferredSize(new Dimension(25, 25)); // Optional, for safety
+//        leftPanel.add(logoLabel);
+//        leftPanel.add(Box.createVerticalStrut(50));
+        ImageIcon logoIcon = new ImageIcon(getClass().getResource("/images/logo.png"));
+        System.out.println("Logo resource: " + getClass().getResource("/images/logo.png"));
+        Image scaledImage = logoIcon.getImage().getScaledInstance(50, 25, Image.SCALE_SMOOTH); // Width 50px
+        JLabel logoLabel = new JLabel(new ImageIcon(scaledImage));
+        logoLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 0)); // 5px padding
+        logoLabel.setPreferredSize(new Dimension(50, 25)); // Match new width
+
+// Wrap in a left-aligned panel
+        JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        logoPanel.setOpaque(false);
+        logoPanel.add(logoLabel);
+
+        leftPanel.add(logoPanel);
         leftPanel.add(Box.createVerticalStrut(50));
 
         // Sign-up section
@@ -119,7 +136,12 @@ public class LoginFrame extends JFrame {
         signUpButton.addActionListener(e -> viewModel.openSignUpPageCommandExecute());
         signUpButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(signUpButton);
+
+// Add glue to push versionPanel to the bottom
         leftPanel.add(Box.createVerticalGlue());
+
+
+
 
         // Version info
         JPanel versionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
