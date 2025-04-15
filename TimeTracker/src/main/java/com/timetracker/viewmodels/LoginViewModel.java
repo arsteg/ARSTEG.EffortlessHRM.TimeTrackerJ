@@ -91,11 +91,14 @@ public class LoginViewModel {
     }
 
     public void setPassword(String password) {
-        String oldValue = this.password;
-        this.password = password;
-        support.firePropertyChange("password", oldValue, password);
-        updateLoginButtonState();
+        if (!this.password.equals(password)) {
+            this.password = password;
+            // Only trigger UI updates if really needed
+            updateLoginButtonState();
+        }
     }
+
+
 
     public void setRememberMe(boolean rememberMe) {
         boolean oldValue = this.rememberMe;

@@ -3,6 +3,8 @@ package com.timetracker.ui;
 import com.timetracker.viewmodels.LoginViewModel;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
@@ -467,14 +469,40 @@ public class LoginFrame extends JFrame {
 
     private void addListeners() {
         txtUsername.getDocument().addDocumentListener(new SimpleDocumentListener(() -> {
-            viewModel.setUserName(txtUsername.getText());
-            textEmail.setVisible(txtUsername.getText().isEmpty());
+            String text = txtUsername.getText();
+            viewModel.setUserName(text);
+            textEmail.setVisible(text.isEmpty());
         }));
 
-        txtPassword.getDocument().addDocumentListener(new SimpleDocumentListener(() -> {
-            viewModel.setPassword(new String(txtPassword.getPassword()));
-            passwordHint.setVisible(txtPassword.getPassword().length == 0);
-        }));
+        // For password field - optimized version
+        txtPassword.getDocument().addDocumentListener(new DocumentListener() {
+            private Timer timer = new Timer(300, e -> {
+                char[] pass = txtPassword.getPassword();
+                SwingUtilities.invokeLater(() -> {
+                    viewModel.setPassword(pass != null ? new String(pass) : "");
+                    passwordHint.setVisible(pass == null || pass.length == 0);
+                });
+            });
+
+            {
+                timer.setRepeats(false);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                timer.restart();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                timer.restart();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                timer.restart();
+            }
+        });
 
         txtUsername.addFocusListener(new FocusAdapter() {
             @Override
@@ -520,8 +548,17 @@ public class LoginFrame extends JFrame {
     }
 
     public void updateUI() {
-        txtUsername.setText(viewModel.getUserName());
-        txtPassword.setText(viewModel.getPassword());
+        // Only update if values have actually changed
+        if (!txtUsername.getText().equals(viewModel.getUserName())) {
+            txtUsername.setText(viewModel.getUserName());
+        }
+
+        // For password, compare the actual content
+        String currentPassword = new String(txtPassword.getPassword());
+        if (!currentPassword.equals(viewModel.getPassword())) {
+            txtPassword.setText(viewModel.getPassword());
+        }
+
         chkRememberMe.setSelected(viewModel.isRememberMe());
         btnLogOn.setEnabled(viewModel.isEnableLoginButton());
         progressBar.setValue(viewModel.getProgressWidth());
